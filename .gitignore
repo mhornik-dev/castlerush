@@ -1,0 +1,27 @@
+# Bytecode-Dateien
+*.class
+
+# Build-Verzeichnisse
+/bin/
+/build/
+/out/
+/target/
+
+# IntelliJ IDEA-Projektdateien
+*.iml
+.idea/
+
+# VS Code Einstellungen
+.vscode/
+
+# Logdateien
+*.log
+
+# Temporäre Dateien
+*.tmp
+*.swp
+*~
+
+# Betriebssystem-Dateien
+.DS_Store       # macOS
+Thumbs.db       # Windows
