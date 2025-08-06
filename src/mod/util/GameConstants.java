@@ -1,3 +1,14 @@
+/**
+ * Enthält alle Konstanten, die für das Spiel relevant sind,
+ * wie Spielfeld- und Fenstergrößen, Anzahl und Werte der Elemente,
+ * Einstellungen für den Spieler, Tastenbelegung, Nachrichten und Farben.
+ * <p>
+ * Diese Klasse ist final und besitzt einen privaten Konstruktor,
+ * um eine Instanziierung zu verhindern.
+ * </p>
+ * 
+ * @author Milos Hornik
+ */
 package mod.util;
 
 import java.awt.Color;
@@ -81,4 +92,3 @@ public final class GameConstants {
     public static final int ENDGAME_MONEY_THRESHOLD = 1000;
 
 }
-
