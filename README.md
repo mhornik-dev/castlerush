@@ -17,6 +17,7 @@ Im Zentrum stehen Strategie, Sammeln von Gold und Energie, und das geschickte Na
 
 ## 🏛️ Projektstruktur
 
+```
 mod/
 ├── controller/         # Spiellogik, Event-Verarbeitung
 ├── exceptions/         # Eigene Ausnahmen
@@ -30,7 +31,7 @@ mod/
 │   ├── service/        # UI-nahe Services
 │   └── ui/             # GUI-Komponenten
 └── Main.java           # Einstiegspunkt
-
+```
 ---
 
 ## ✨ Architektur-Überblick
