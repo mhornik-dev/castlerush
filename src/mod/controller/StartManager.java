@@ -1,3 +1,13 @@
+/**
+ * Einstiegspunkt-Manager für die Anwendung.
+ * <p>
+ * Die Klasse {@code StartManager} ist als Singleton ausgelegt und verwaltet die Initialisierung und den Neustart der Anwendung.
+ * Sie koordiniert das Zusammenspiel zwischen {@link UIManager}, {@link GameUI} und {@link GameController} und implementiert das {@link StartInterface}.
+ * 
+ * Die Initialisierung der Anwendung erfolgt über die statische Methode {@link #init()}.
+ * 
+ * @author Milos Hornik
+ */
 package mod.controller;
 
 import mod.interfaces.StartInterface;
@@ -12,6 +22,10 @@ public class StartManager implements StartInterface {
     private GameUI gameUI;
     private GameController gameController;
 
+    /**
+     * Privater Konstruktor zur Singleton-Implementierung.
+     * Initialisiert UIManager und GameUI, zeigt die Oberfläche an.
+     */
     private StartManager() {
         uiController = new UIManager(this);
         gameUI = new GameUI(
@@ -22,10 +36,20 @@ public class StartManager implements StartInterface {
         gameUI.setVisible(true);
     }
 
+    /**
+     * Initialisiert den {@code StartManager} und damit die Anwendung.
+     * Sollte beim Programmstart aufgerufen werden.
+     */
     public static void init() {
         getInstance();
     }
 
+    /**
+     * Gibt die Singleton-Instanz des {@code StartManager} zurück.
+     * Wird bei Bedarf erzeugt.
+     *
+     * @return die Singleton-Instanz des {@code StartManager}
+     */
     private static StartManager getInstance() {
         if (instance == null) {
             instance = new StartManager();
@@ -33,6 +57,10 @@ public class StartManager implements StartInterface {
         return instance;
     }
 
+    /**
+     * Startet ein neues Spiel, indem ein neuer {@link GameController} erstellt
+     * und dem {@link UIManager} übergeben wird.
+     */
     @Override
     public void startNewGame() {
         gameController = new GameController(uiController);

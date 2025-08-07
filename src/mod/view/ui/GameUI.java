@@ -1,9 +1,22 @@
+/**
+ * Hauptfenster der Spieloberfläche.
+ * <p>
+ * Die {@code GameUI}-Klasse erweitert {@link JFrame} und bündelt die drei zentralen UI-Komponenten:
+ * {@link SteuerPanel}, {@link SpielfeldPanel} und {@link TextAusgabePanel}. 
+ * Die Panels werden in verschachtelten {@link JSplitPane} angeordnet, um eine übersichtliche Struktur zu schaffen.
+ * 
+ * <ul>
+ *   <li>Oben: Steuerungsbereich (links) und Spielfeld (rechts)
+ *   <li>Unten: Textausgabe für Spielnachrichten
+ * </ul>
+ * Die Größe und weitere Fenstereigenschaften werden über {@link GameConstants} gesteuert.
+ * 
+ * @author Milos Hornik
+ */
 package mod.view.ui;
 
 import javax.swing.*;
 import mod.util.GameConstants;
-
-@SuppressWarnings("unused") // steuerPanel, spielfeldPanel, textAusgabePanel
 
 public class GameUI extends JFrame {
 
@@ -11,6 +24,13 @@ public class GameUI extends JFrame {
     private final SpielfeldPanel spielfeldPanel;
     private final TextAusgabePanel textAusgabePanel;
 
+    /**
+     * Erstellt das Hauptfenster und initialisiert die GUI-Komponenten.
+     *
+     * @param steuerPanel Steuerungs-Panel (links oben)
+     * @param spielfeldPanel Spielfeld-Panel (rechts oben)
+     * @param textAusgabePanel Textausgabe-Panel (unten)
+     */
     public GameUI(SteuerPanel steuerPanel, SpielfeldPanel spielfeldPanel, TextAusgabePanel textAusgabePanel) {
         this.steuerPanel = steuerPanel;
         this.spielfeldPanel = spielfeldPanel;

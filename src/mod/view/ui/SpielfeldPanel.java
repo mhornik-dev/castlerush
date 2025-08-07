@@ -1,3 +1,18 @@
+/**
+ * Panel für das Spielfeld im Spiel.
+ * <p>
+ * Das {@code SpielfeldPanel} ist ein benutzerdefiniertes {@link JPanel},
+ * das alle darzustellenden {@link DrawableElement}-Objekte grafisch rendert und
+ * Tasteneingaben (über definierte Key Bindings) an einen {@link KeyMapper} weiterleitet.
+ * 
+ * <ul>
+ *   <li>Stellt die Spielfläche mit Gitter und Elementen dar.
+ *   <li>Verarbeitet Tastendrücke für Spielerbewegung.
+ *   <li>Kann jederzeit eine neue Liste von Elementen zum Zeichnen erhalten.
+ * </ul>
+ * 
+ * @author Milos Hornik
+ */
 package mod.view.ui;
 
 import javax.swing.*;
@@ -17,6 +32,9 @@ public class SpielfeldPanel extends JPanel {
     private List<DrawableElement> elements = new ArrayList<>();
     private KeyMapper keyMapper;
 
+    /**
+     * Erstellt das Spielfeld-Panel, setzt Größe, Hintergrund und Key Bindings.
+     */
     public SpielfeldPanel() {
         setPreferredSize(new Dimension(GameConstants.BOARD_WIDTH, GameConstants.BOARD_HEIGHT));
         setBackground(new Color(255, 255, 200));
@@ -25,10 +43,19 @@ public class SpielfeldPanel extends JPanel {
         setupKeyBindings();
     }
 
+    /**
+     * Setzt die {@link KeyMapper}-Implementierung für Tastaturereignisse.
+     *
+     * @param keyMapper der zu verwendende KeyMapper
+     */
     public void setKeyMapper(KeyMapper keyMapper) {
         this.keyMapper = keyMapper;
     }
 
+    /**
+     * Initialisiert die Tastaturkürzel für die Spielfeldsteuerung
+     * und verknüpft sie mit Methoden im {@link KeyMapper}.
+     */
     private void setupKeyBindings() {
         InputMap im = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
@@ -70,6 +97,11 @@ public class SpielfeldPanel extends JPanel {
         });
     }
 
+    /**
+     * Zeichnet das Spielfeld, das Gitter und alle übergebenen Elemente.
+     *
+     * @param g das Graphics-Objekt
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -84,6 +116,11 @@ public class SpielfeldPanel extends JPanel {
         }
     }
 
+    /**
+     * Aktualisiert die Liste der zu zeichnenden Elemente und fordert eine Neudarstellung an.
+     *
+     * @param elements die neuen Spielelemente
+     */
     public void setElementsToDraw(List<DrawableElement> elements) {
         this.elements = elements;
         repaint();

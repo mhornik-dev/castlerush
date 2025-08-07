@@ -1,8 +1,21 @@
+/**
+ * Panel für die Steuerungselemente am Rand des Spiels.
+ * <p>
+ * Das {@code SteuerPanel} enthält:
+ * <ul>
+ *   <li>Ein Logo-Bild
+ *   <li>Gold- und Energieanzeigen
+ *   <li>Buttons zum Starten und Beenden des Spiels
+ *   <li>Richtungsbuttons für die Bewegung
+ * </ul>
+ * Die Komponenten werden mit {@link GridBagLayout} übersichtlich angeordnet.
+ *
+ * @author Milos Hornik
+ */
 package mod.view.ui;
 
 import javax.swing.*;
 import java.awt.*;
-
 
 public class SteuerPanel extends JPanel {
 
@@ -10,10 +23,16 @@ public class SteuerPanel extends JPanel {
     private JButton btnStarten, btnExit, btnLeft, btnRight, btnUp, btnDown;
     private JLabel lblLogo;
 
+    /**
+     * Erstellt das Steuerpanel und initialisiert die UI-Komponenten.
+     */
     public SteuerPanel() {   
         initUI();
     }
 
+    /**
+     * Initialisiert das Layout und alle Steuerelemente.
+     */
     private void initUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -73,14 +92,52 @@ public class SteuerPanel extends JPanel {
 
     }
 
+     /**
+     * Aktualisiert die Gold-Anzeige.
+     * @param gold der aktuelle Goldwert als String
+     */
     public void setLblGold(String gold) { lblGold.setText(gold); }
+
+    /**
+     * Aktualisiert die Energie-Anzeige.
+     * @param energie der aktuelle Energiewert als String
+     */
     public void setLblEnergie(String energie) { lblEnergie.setText(energie); }
 
+    /**
+     * Liefert den Button zum Starten eines neuen Spiels.
+     * @return Start-Button
+     */
     public JButton getBtnStarten() { return btnStarten; }
+
+    /**
+     * Liefert den Button zum Beenden des Spiels.
+     * @return Exit-Button
+     */
     public JButton getBtnExit() { return btnExit; }
+
+    /**
+     * Liefert den Button für die Bewegung nach links.
+     * @return Linkstaste
+     */
     public JButton getBtnLeft() { return btnLeft; }
+
+    /**
+     * Liefert den Button für die Bewegung nach rechts.
+     * @return Rechtstaste
+     */
     public JButton getBtnRight() { return btnRight; }
+
+    /**
+     * Liefert den Button für die Bewegung nach oben.
+     * @return Obentaste
+     */
     public JButton getBtnUp() { return btnUp; }
+
+    /**
+     * Liefert den Button für die Bewegung nach unten.
+     * @return Untentaste
+     */
     public JButton getBtnDown() { return btnDown; }
 
 }

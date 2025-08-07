@@ -1,3 +1,13 @@
+/**
+ * Die zentrale Steuerungsklasse für das Spiel.
+ * <p>
+ * Der {@code GameController} verwaltet den Spieler, die Spielelemente und die Spiellogik.
+ * Er initialisiert das Spielfeld, prüft Bewegungen, verarbeitet Ereignisse und hält den Spielzustand.
+ * Die Klasse interagiert mit dem {@link UIManager} zur Anzeige und nutzt verschiedene Modellelemente
+ * wie {@link Player}, {@link Treasure}, {@link Castle}, {@link Apple}, {@link Bone}, {@link Heart}, {@link Diamond} und {@link Coin}.
+ * 
+ * @author Milos Hornik
+ */
 package mod.controller;
 
 import java.util.List;
@@ -35,63 +45,81 @@ public class GameController {
     private Random random = new Random();
     private boolean gameOver = false;
 
+    /**
+     * Erstellt einen neuen GameController und initialisiert das Spielfeld mit Spieler und Elementen.
+     *
+     * @param uiController Referenz auf den UIManager zur Steuerung der Oberfläche
+     */
     public GameController(UIManager uiController) {
         this.uiController = uiController;
 
         elements = new ArrayList<>();
         Set<Position> usedPositions = new HashSet<>();
 
-        // Player erstellen
         Position startPosition = getRandomPosition(usedPositions);
         player = new Player(startPosition);
 
-        // Äpfel mit zufälligen Positionen
         for (int i = 0; i < GameConstants.APPLE_COUNT; i++) {
             Position pos = getRandomPosition(usedPositions);
             elements.add(new Apple(pos, true));
         }
 
-        // Knochen mit zufälligen Positionen
         for (int i = 0; i < GameConstants.BONE_COUNT; i++) {
             Position pos = getRandomPosition(usedPositions);
             elements.add(new Bone(pos, true));
         }
 
-        // Schloss
         Position castlePos = getRandomPosition(usedPositions);
         elements.add(new Castle(castlePos, true));
 
-        // Herzen
         for (int i = 0; i < GameConstants.HEART_COUNT; i++) {
             Position pos = getRandomPosition(usedPositions);
             elements.add(new Heart(pos, true));
         }
 
-        // Diamanten
         for (int i = 0; i < GameConstants.DIAMOND_COUNT; i++) {
             Position pos = getRandomPosition(usedPositions);
             elements.add(new Diamond(pos, true));
         }
 
-        // Münzen
         for (int i = 0; i < GameConstants.COIN_COUNT; i++) {
             Position pos = getRandomPosition(usedPositions);
             elements.add(new Coin(pos, true));
         }
     }
 
+    /**
+     * Gibt zurück, ob das Spiel beendet ist.
+     *
+     * @return {@code true}, wenn das Spiel vorbei ist, sonst {@code false}
+     */
     public boolean getIsGameOver() {
         return gameOver;
     }
 
+    /**
+     * Setzt den EventListener für Ereignisbenachrichtigungen.
+     *
+     * @param listener der zu setzende EventListener
+     */
     public void setEventListener(EventListener listener) {
         this.eventListener = listener;
     }
 
+    /**
+     * Gibt den Spieler zurück.
+     *
+     * @return Spielerobjekt {@link Player} des Spiels
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gibt alle Elemente zurück, die gezeichnet werden sollen (inkl. Spieler).
+     *
+     * @return Liste von {@link DrawableElement}
+     */
     public List<DrawableElement> getElementsToDraw() {
         List<DrawableElement> alleElemente = new ArrayList<>();
 
@@ -104,6 +132,11 @@ public class GameController {
         return alleElemente;
     }
 
+    /**
+     * Führt eine Spielerbewegung aus und verarbeitet die Folgen.
+     *
+     * @param bewegung die gewünschte Bewegung
+     */
     public void move(Move bewegung) {
         MoveResult result = checkMove(bewegung);
 
@@ -125,9 +158,14 @@ public class GameController {
                 default -> eventListener.newEventMessage("Bewegung nicht möglich.", GameConstants.COLOR_RED);
             }
         }
-
     }
 
+    /**
+     * Erzeugt eine zufällige, noch nicht belegte Position auf dem Spielfeld.
+     *
+     * @param usedPositions bereits belegte Positionen
+     * @return neue zufällige Position {@link Position}
+     */
     private Position getRandomPosition(Set<Position> usedPositions) {
         Position pos;
         do {
@@ -139,6 +177,12 @@ public class GameController {
         return pos;
     }
     
+    /**
+     * Prüft, ob eine Position gültig ist (im Spielfeldbereich liegt).
+     *
+     * @param position zu prüfende Position
+     * @return {@code true}, wenn die Position gültig ist
+     */
     private boolean isValidPosition(Position position) {
         int maxX = GameConstants.BOARD_WIDTH - GameConstants.TILE_SIZE;
         int maxY = GameConstants.BOARD_HEIGHT - GameConstants.TILE_SIZE;
@@ -147,10 +191,22 @@ public class GameController {
             position.getY() >= 0 && position.getY() <= maxY;
     }
 
+    /**
+     * Prüft, ob der Spieler vor der Bewegung genügend Energie hat.
+     *
+     * @param energieVerbrauch benötigte Energie
+     * @return {@code true}, wenn genügend Energie vorhanden ist
+     */
     private boolean checkEnergyBeforeMove(int energieVerbrauch) {
         return player.getEnergie() >= energieVerbrauch;
     }
 
+    /**
+     * Prüft, ob die gewünschte Bewegung möglich ist und gibt das Ergebnis zurück.
+     *
+     * @param bewegung die Bewegung
+     * @return Ergebnis der Bewegung als {@link MoveResult}
+     */
     private MoveResult checkMove(Move bewegung) {
         Position neuePosition = player.getPosition().changePosition(bewegung);
 
@@ -165,6 +221,11 @@ public class GameController {
         return MoveResult.success(neuePosition, GameConstants.PLAYER_MOVE_ENERGY);
     }
 
+    /**
+     * Prüft nach einer Bewegung auf besondere Ereignisse an der aktuellen Position.
+     *
+     * @param position aktuelle Position des Spielers
+     */
     private void checkPositionForEvent(Position position) {
         for (Element e : elements) {
             if (e instanceof Treasure treasure) {
@@ -203,6 +264,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Prüft, ob das aktuelle Element das Schloss ist, und behandelt das Spielende.
+     *
+     * @param element geprüftes Element
+     */
     private void checkForCastle(Element element) {
         if (element instanceof Castle castle) {
             if (!castle.getIsFound()) {
@@ -220,6 +286,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Prüft nach jedem Zug, ob der Spieler noch Energie hat, sonst beendet das Spiel.
+     */
     private void checkEnergieAfterMove() {
         if (player.getEnergie() <= 0 && !gameOver) {
             gameOver = true;
@@ -227,6 +296,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Prüft, ob der Spieler genügend Gold für das Spielende hat.
+     *
+     * @return {@code true}, wenn genug Gold vorhanden ist
+     */
     private Boolean hasEnoughGold() {
         if (player.getGold() >= GameConstants.ENDGAME_MONEY_THRESHOLD && !gameOver) {
             return true;

@@ -1,13 +1,15 @@
-package mod;
-
-import mod.controller.StartManager;
-
 /**
  * Einstiegspunkt der Anwendung.
  * <p>
  * Diese Klasse enthält die {@code main}-Methode, welche die Anwendung initialisiert,
  * indem sie die Methode {@link StartManager#init()} aus der Klasse {@link StartManager} aufruft.
+ * 
+ * @author Milos Hornik
  */
+package mod;
+
+import mod.controller.StartManager;
+
 public class Main {
 
     /**
